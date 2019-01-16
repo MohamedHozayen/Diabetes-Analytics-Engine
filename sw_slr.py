@@ -25,7 +25,7 @@ ts = pd.DataFrame(t)
 #plt.plot(ts, ys)
 
 w_error =  []
-for w in range(2, 30):
+for w in range(2, 10):#w is window size
     # Arrays that will contain predicted values.
     tp_pred = np.zeros(len(ys)) 
     yp_pred = np.zeros(len(ys))
@@ -46,7 +46,7 @@ for w in range(2, 30):
         if i < tp_pred.size-1:
             tp = ts.iloc[i+1,0]
             tp_pred[i+1] = tp    
-            yp_pred[i+1] = lm_tmp.predict(tp)
+            yp_pred[i+1] = lm_tmp.predict(tp.reshape(-1,1))
     
     tp_pred = tp_pred[ws+1:] 
     yp_pred = yp_pred[ws+1:]

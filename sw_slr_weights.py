@@ -25,64 +25,64 @@ ts = pd.DataFrame(t)
 #plt.plot(ts, ys)
 
 w_error =  []
-for w in range(2, 30):
-    # Arrays that will contain predicted values.
-    tp_pred = np.zeros(len(ys)) 
-    yp_pred = np.zeros(len(ys))
-    ws = w
-    lm_tmp = LinearRegression()
+#for w in range(2, 30):
+# Arrays that will contain predicted values.
+tp_pred = np.zeros(len(ys)) 
+yp_pred = np.zeros(len(ys))
+ws = 4
+lm_tmp = LinearRegression()
+
+ph = 5  
+mu = 0.9
+
+# Real time data acquisition is here simulated and a prediction
+for i in range(ws, len(ys)):
+   
+    ts_tmp = ts[i-ws:i]
+    ys_tmp = ys[i-ws:i]
+    ns = len(ys_tmp)
     
-    ph = 5  
-    mu = 0.9 
+    weights = np.ones(ns)*mu
+    for k in range(ns):
+        weights[k] = weights[k]**k
+    weights = np.flip(weights, 0)
     
-    # Real time data acquisition is here simulated and a prediction
-    for i in range(ws, len(ys)):
-       
-        ts_tmp = ts[i-ws:i]
-        ys_tmp = ys[i-ws:i]
-        ns = len(ys_tmp)
+    # MODEL
+    # Fit this window to the linear model    
+    model_tmp = lm_tmp.fit(X=ts_tmp, y=ys_tmp, sample_weight=weights)
+
+    #predict the next t+1 glucose level    
+    if i < tp_pred.size-1:
+        tp = ts.iloc[i+1,0]
+        tp_pred[i+1] = tp    
+        yp_pred[i+1] = lm_tmp.predict(tp.reshape(-1,1))
         
-        weights = np.ones(ns)*mu
-        for k in range(ns):
-            weights[k] = weights[k]**k
-        weights = np.flip(weights, 0)
-        
-        # MODEL
-        # Fit this window to the linear model    
-        model_tmp = lm_tmp.fit(X=ts_tmp, y=ys_tmp, sample_weight=weights)
-    
-        #predict the next t+1 glucose level    
-        if i < tp_pred.size-1:
-            tp = ts.iloc[i+1,0]
-            tp_pred[i+1] = tp    
-            yp_pred[i+1] = lm_tmp.predict(tp)
-    
-    tp_pred = tp_pred[ws+1:] 
-    yp_pred = yp_pred[ws+1:]
-    
-    eds = np.zeros(len(yp_pred))
-    actual = np.array(ys[ws+1:])
-    for i in range(0, yp_pred.size):
-        eds[i] = (yp_pred[i] - actual[i])**2
-    s = sum(eds)
-    w_error.append([w, s])
-    print(w_error)
+tp_pred = tp_pred[ws+1:] 
+yp_pred = yp_pred[ws+1:]
+
+eds = np.zeros(len(yp_pred))
+actual = np.array(ys[ws+1:])
+for i in range(0, yp_pred.size):
+    eds[i] = (yp_pred[i] - actual[i])**2
+s = sum(eds)
+#w_error.append([w, s])
+#print(w_error)
  
-pd.DataFrame(w_error).to_csv('list.csv')  #save as csv     
-#plt.plot(tp_pred, eds)
-#plt.title('EDST = %g, window size = %g' %(sum(eds), ws))
-#plt.xlabel('Index')
-#plt.ylabel('Magnitude')
-#plt.show()
-#
-# # PLOT 
-#fig, ax = plt.subplots()
-#fig.suptitle('Glucose prediction', fontsize=14, fontweight='bold')
-#ax.set_title('Window Size is %g data point' %(ws))
-#ax.plot(tp_pred, yp_pred, '--', label='Prediction') 
-#ax.plot(ts, ys, label='Measured data') 
-#ax.set_xlabel('time (min)')
-#ax.set_ylabel('glucose (mg/dl)')
-#ax.legend()
+#pd.DataFrame(w_error).to_csv('list.csv')  #save as csv     
+plt.plot(tp_pred, eds)
+plt.title('EDST = %g, window size = %g' %(sum(eds), ws))
+plt.xlabel('Index')
+plt.ylabel('Magnitude')
+plt.show()
+
+ # PLOT 
+fig, ax = plt.subplots()
+fig.suptitle('Glucose prediction', fontsize=14, fontweight='bold')
+ax.set_title('Window Size is %g data point' %(ws))
+ax.plot(tp_pred, yp_pred, '--', label='Prediction') 
+ax.plot(ts, ys, label='Measured data') 
+ax.set_xlabel('time (min)')
+ax.set_ylabel('glucose (mg/dl)')
+ax.legend()
 
  

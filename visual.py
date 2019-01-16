@@ -26,8 +26,8 @@ n_dif = 60/5 #how many 5 min in 1 hour
 t = np.linspace(0, dif*12*24, np.size(gl_h, 0))
 
 # Visualising 
-h = plt.plot(t, gl_h, color = 'green') # , label='Healthy'
-d = plt.plot(t, gl_d, color = 'red') # , label='Diabetic'
+h = plt.plot(t, gl_h[:,1], color = 'green') # , label='Healthy'
+d = plt.plot(t, gl_d[:,1], color = 'red') # , label='Diabetic'
 plt.title('Glucose Level Over Time')
 plt.xlabel('Time')
 plt.ylabel('Glucose Level (mmol/L)')

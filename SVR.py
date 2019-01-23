@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-def predict(x, y, degree, pred):
+def predict(x, y, pred):
      #degree is unused here
 
     # Feature Scaling

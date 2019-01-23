@@ -7,11 +7,8 @@ Created on Mon Nov 19 19:39:22 2018
 # Importing the libraries
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import SVR
 
-
-def model(x, y, model, ws, degree, pred_interval): 
+def model(x, y, model, ws, pred_interval): 
 
     """
 	Model is a function that run predictions model
@@ -42,7 +39,10 @@ def model(x, y, model, ws, degree, pred_interval):
             #PREDICTION 6 12
             tp = x.iloc[i+pred_interval, 0]
             tp_pred[i] = tp    
-            yp_pred[i] = model.predict(ts_tmp, ys_tmp, degree, tp.reshape(-1,1))
+            yp_pred[i] = model.predict(ts_tmp, ys_tmp, tp.reshape(-1,1))
+            
+    tp_pred = np.trim_zeros(tp_pred)
+    yp_pred = np.trim_zeros(yp_pred)
     return tp_pred, yp_pred
         
         

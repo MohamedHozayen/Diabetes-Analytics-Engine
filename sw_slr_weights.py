@@ -62,6 +62,7 @@ yp_pred = yp_pred[ws+1:]
 
 eds = np.zeros(len(yp_pred))
 actual = np.array(ys[ws+1:])
+
 for i in range(0, yp_pred.size):
     eds[i] = (yp_pred[i] - actual[i])**2
 s = sum(eds)

@@ -12,6 +12,14 @@ import pandas as pd
 def predict(x, y, pred):
      #degree is unused here
 
+    #degree is unused here
+    mu = 0.9
+    ns = len(y)
+    weights = np.ones(ns)*mu
+    for k in range(ns):
+        weights[k] = weights[k]**k
+    weights = np.flip(weights, 0)
+    
     # Feature Scaling
     from sklearn.preprocessing import StandardScaler
     sc_X = StandardScaler()

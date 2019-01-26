@@ -15,7 +15,7 @@ def predict(x, y, pred):
    
     # Fitting Random Forest Regression to the dataset
     from sklearn.ensemble import RandomForestRegressor
-    regressor = RandomForestRegressor(n_estimators = 100, random_state = 0)
+    regressor = RandomForestRegressor(n_estimators = 1, random_state = 0, min_samples_split = 2)
     regressor.fit(x, y)
     
     # Predicting a new result

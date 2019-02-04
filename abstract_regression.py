@@ -45,8 +45,4 @@ def model(x, y, model, ws, pred_interval):
     yp_pred = np.trim_zeros(yp_pred)
     return tp_pred, yp_pred
         
-        
-#y = gl_h[:,0].astype('U').astype(np.float)
-#eds = (yp_pred - y)**2
-#eds = eds[20:]
 

@@ -3,6 +3,8 @@
 Created on Tue Jan 15 11:00:59 2019
 
 @author: MHozayen
+
+Support Vector Regresssion
 """
 # Importing the libraries
 import numpy as np

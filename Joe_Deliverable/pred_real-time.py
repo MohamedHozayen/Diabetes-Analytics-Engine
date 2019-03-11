@@ -12,19 +12,6 @@ import LR
 import RFR
 import sys, traceback
 
-#def main():
-#    try:
-#        do main program stuff here
-#        ....
-#    except KeyboardInterrupt:
-#        print "Shutdown requested...exiting"
-#    except Exception:
-#        traceback.print_exc(file=sys.stdout)
-#    sys.exit(0)
-
-#if __name__ == "__main__":
-#    result = pred(x, y, RFR, 12, 9)
-
 def pred(x, y, model, ws, pred_interval): 
 
     """
@@ -43,6 +30,28 @@ def pred(x, y, model, ws, pred_interval):
              if pred-intervak is 6 that means prediction for t+6 (next 30 min)
 	Returns:
 		A single value y-predicted
+        
+    x = time vector 5 minutes between each point
+    y = gloucose level
+    
+    model = LR, RFR, or SVR
+    
+    ws =  1, 2, 3, ...
+    pred_interval = 1, 2, 3, ...
+    
+     
+    1 is 5 minutes
+    2 is 10 minutes
+    3 is 15 minutes
+    4 is 20 minutes
+    5 is 25 minutes
+    6 is 30 minutes
+    7 is 35 minutes
+    
+    typical input for ws and pred_interval = 6, 9, 12 for 30, 45, 60 minutes respectively
+    ....
+    ....
+    
 	"""
         
     #check if x, and y are the same size
